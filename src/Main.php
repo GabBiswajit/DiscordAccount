@@ -226,7 +226,7 @@ class Main extends PluginBase{
      * @param callable $callback function(?string $discord_userid): void{}
      */
     public function getDiscordByName(string $minecraft_username, Callable $callback): void{
-        $this->database->executeSelect("links.get_username", ["username" => strtolower($minecraft_username)], function(array $rows) use($callback): void{
+        $this->database->executeSelect("links.get_username", ["username" => $minecraft_username], function(array $rows) use($callback): void{
             $callback($rows[0]["dcid"] ?? null);
         }, function(SqlError $error) use($minecraft_username): void{
             $this->getLogger()->error("Failed to get discord id for $minecraft_username: " . $error->getMessage());
